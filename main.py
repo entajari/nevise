@@ -151,13 +151,17 @@ def spell_checking_on_sents(model, vocab, device, normalizer, txt):
             new_out.append( (utils.de_space_special_chars(out[i][0]), utils.de_space_special_chars(out[i][1])))
     return new_out, splitters
 
+from pathlib import Path
 
-if __name__ == '__main__':
+# Build paths inside the project like this: BASE_DIR / 'subdir'.
+BASE_DIR = Path(__file__).resolve().parent
+
+def totalOutput(address:str):
     normalizer = Normalizer(punctuation_spacing=False, remove_extra_spaces=False)
-    vocab_path = os.path.join('model', 'vocab.pkl')
-    model_checkpoint_path = os.path.join('model', 'model.pth.tar')
+    vocab_path = os.path.join(BASE_DIR, 'model', 'vocab.pkl')
+    model_checkpoint_path = os.path.join(BASE_DIR, 'model', 'model.pth.tar')
     model, vocab, device = load_pre_model(vocab_path=vocab_path, model_checkpoint_path=model_checkpoint_path)
     #test
-    sample_input = 'این یک مثالل صاده برالی ازرابی این سامانح اسصت'
-    output = spell_checking_on_sents(model, vocab, device, normalizer, sample_input)
-    print(output)
+    sample_input = str(address)
+    output = spell_checking_on_sents(model, vocab, device, normalizer,sample_input)
+    return output
